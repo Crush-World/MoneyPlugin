@@ -1,0 +1,5 @@
+main: ojy\money\MoneyPlugin
+author: ojy
+api: 4.0.0
+version: B1
+name: MoneyPlugin
