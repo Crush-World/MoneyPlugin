@@ -100,6 +100,29 @@ class MoneyPlugin extends PluginBase implements Listener
         return -1;
     }
 
+    public static function setMoney(Player $player, float $money): bool
+    {
+        return self::setMoneyForName($player->getName(), $money, false);
+    }
+
+    public static function setMoneyForName(string $playerName, float $money, bool $check = true): bool
+    {
+        if ($check)
+            if (($player = Server::getInstance()->getPlayer($playerName)))
+                $playerName = $player->getName();
+
+        $playerName = strtolower($playerName);
+        $dataF = self::getDataFile();
+        if ($dataF->exists($playerName)) {
+            if ($money < 0)
+                $money = 0;
+            $dataF->set($playerName, $money);
+            $dataF->save();
+            return true;
+        }
+        return false;
+    }
+
     public static function reduceMoney(Player $player, float $money): bool
     {
         return self::reduceMoneyForName($player->getName(), $money, false);
